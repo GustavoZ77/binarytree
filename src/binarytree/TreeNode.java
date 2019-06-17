@@ -1,48 +1,53 @@
 package binarytree;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class TreeNode {
 
 	public TreeNode right;
 	public TreeNode left;
-	public int value;
-	public int index;
-	private List<Integer> indexListFound = new ArrayList<>();
+	public int value = -1;
+	public int coincidence = 0;
+	public int originalIndex = 0;
 
-	public TreeNode(Integer value, Integer index) {
+	public TreeNode() {
+	}
+	
+	
+	public TreeNode(Integer value, int originalIndex) {
+		this.coincidence++;
+		this.originalIndex = originalIndex;
 		this.value = value;
-		this.index = index;
 	}
 
 	public TreeNode(Integer collection[]) {
-		int index = 0;
+		int count = 0;
 		for(Integer val : collection) {
-			index++;
-			this.add(val, index);
+			this.add(val,count);
+			count++;
 		}
 	}
 
-	public void add(Integer value, Integer index) {
+	public void add(Integer value,int originalIndex) {
+		if(value == this.value) {
+			this.coincidence++;
+		}
 		if (value < this.value) {
 			if (left != null) {
-				left.add(value, index);
+				left.add(value, originalIndex);
 			} else {
-				left = new TreeNode(value, index);
+				left = new TreeNode(value,originalIndex);
 			}
 		} else {
 			if (right != null) {
-				right.add(value, index);
+				right.add(value,originalIndex);
 			} else {
-				right = new TreeNode(value, index);
+				right = new TreeNode(value,originalIndex);
 			}
 		}
 	}
 	
-	public List<Integer> search(Integer value){
+	public TreeNode search(Integer value){
 		if(this.value == value) {
-			this.indexListFound.add(this.index);
+			return this;
 		}else if (value < this.value) {
 	        if (this.left != null) {
 	            return this.left.search(value);
@@ -52,6 +57,6 @@ public class TreeNode {
 	            return this.right.search(value);
 	        } 
 	    }
-	return this.indexListFound;	
+		return new TreeNode();
 	} 	
 }
