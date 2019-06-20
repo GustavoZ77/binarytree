@@ -1,20 +1,21 @@
 package binarytree;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TreeNode {
 
 	public TreeNode right;
 	public TreeNode left;
 	public int value = -1;
-	public int coincidence = 0;
-	public int originalIndex = 0;
+	public List<Integer> originalIndex = new ArrayList<>();
 
 	public TreeNode() {
 	}
 	
 	
 	public TreeNode(Integer value, int originalIndex) {
-		this.coincidence++;
-		this.originalIndex = originalIndex;
+		this.originalIndex.add(originalIndex);
 		this.value = value;
 	}
 
@@ -28,7 +29,7 @@ public class TreeNode {
 
 	public void add(Integer value,int originalIndex) {
 		if(value == this.value) {
-			this.coincidence++;
+			this.originalIndex.add(originalIndex);
 		}
 		if (value < this.value) {
 			if (left != null) {
